@@ -53,7 +53,7 @@ const MyMapView = ({ }) => {
   //setting the patting by clicking on list object
   const handlesetLocation=(points)=>{
     setPath(points)
-    console.log("fdsl ",points)
+    setdawLine(true)
     setShowlist(false)
     if (mapRef.current) {
       const selectedRegion = {
@@ -131,7 +131,8 @@ useEffect(()=>{
         />
       </MapView>
       
-      <Modal transparent={true} style={{height:100,width:100}} visible={showModal}>
+      {/* Location Save Modal */}
+      <Modal transparent={true} style={{height:100,width:100}} visible={showModal} animationType='fade'>
         <View style={styles.centeredview}>
           <View style={styles.modalview}>
          <View style={styles.input}><TextInput   placeholder='Enter Location Name'
@@ -144,11 +145,11 @@ useEffect(()=>{
         </View>
         </View>
 
-
-
       </Modal>
 
-      <Modal visible={showlist} transparent={true}>
+
+{/* List modal */}
+      <Modal visible={showlist} transparent={true} animationType='slide'>
   <ScrollView style={{ padding: 30, borderRadius: 10, backgroundColor: 'white' }}>
     <View style={styles.listheadingcon}>
       <Text style={styles.listheading}>Stored Location List</Text>
@@ -169,6 +170,8 @@ useEffect(()=>{
     <View style={{ alignItems: 'flex-end', marginTop: 5 }}></View>
   </ScrollView>
 </Modal>
+
+{/* //Last Three buttons */}
 
       <View style={{ flex: 1, padding: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' }}>
         <Pressable style={styles.functionbuttons} onPress={() => { setdawLine(true)
