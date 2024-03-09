@@ -17,7 +17,7 @@ const MyMapView = ({ }) => {
   const [mapScrollEnabled, setMapScrollEnabled] = useState(true);
   const [makeDraw,setMakedraw]=useState(false)
 
-  //handling drawing
+  //handling drawiing on map
   const handleMapPress = (e) => {
     if (makeDraw) {
       setPath([...path, e.nativeEvent.coordinate]);
