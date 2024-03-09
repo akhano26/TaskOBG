@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import { StyleSheet,Text,View,Button,TextInput,Image,TouchableOpacity,SafeAreaView, Alert } from 'react-native'
 import pic from '../assets/peakpx.jpg'
+import Toast from 'react-native-toast-message';
 
 
 export default function Login({navigation}){
@@ -32,8 +33,10 @@ const handleLogin=()=>{
 })
 .then(res => res.json())
 .then(()=>{
- 
+ showToast()
+ setTimeout(() => {
   navigation.navigate('Map')
+ }, 1500);
 })
     }
 catch(error){
@@ -41,9 +44,22 @@ console.log(error.message)
 }
   }
 else{
-  console.log("Ja")
+ showToast2()
 }
 
+}
+
+const showToast=()=>{
+  Toast.show({
+    type:'success',
+    text1:'Successfully Logged In'
+  })
+}
+const showToast2=()=>{
+  Toast.show({
+    type:'error',
+    text1:'Kindly fill the required Fields'
+  })
 }
   return(
 <View style={styles.container}>
@@ -90,6 +106,7 @@ onChangeText={newtext=>setEmail(newtext)}
 </View>
 </SafeAreaView>   
   </View>
+  <Toast/>
 </View>
   )
 
