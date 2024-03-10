@@ -1,7 +1,8 @@
 import React,{useState} from 'react'
-import { StyleSheet,Text,View,Button,TextInput,Image,TouchableOpacity,SafeAreaView, Alert } from 'react-native'
+import { StyleSheet,Text,View,Button,TextInput,Image,TouchableOpacity,SafeAreaView, Alert,TouchableWithoutFeedback,Keyboard,KeyboardAvoidingView, Platform } from 'react-native'
 import pic from '../assets/peakpx.jpg'
 import Toast from 'react-native-toast-message';
+import { ScrollView } from 'react-native-gesture-handler';
 
 
 export default function Login({navigation}){
@@ -64,8 +65,10 @@ const showToast2=()=>{
   return(
 <View style={styles.container}>
  <Image source={pic} style={styles.backImage}/>
-  <View  style={styles.whitesheet} >
- <SafeAreaView style={styles.form}>
+ <View style={styles.whitesheet}>
+  <TouchableWithoutFeedback onPress={Keyboard.dismiss}   >
+ <View style={styles.form}>
+  <KeyboardAvoidingView  behavior={Platform.OS === 'ios' ? 'padding' : 'height'}  keyboardVerticalOffset={Platform.OS=='ios'?100:0}>
 <Text style={styles.title}>Login</Text>
 <TextInput
 style={styles.input}
@@ -104,7 +107,9 @@ onChangeText={newtext=>setEmail(newtext)}
     <Text style={{color:'#f57c00',fontWeight:'600',fontSize:18}} onPress={()=>navigation.navigate('Signup')}>Sign Up</Text>
   </TouchableOpacity>
 </View>
-</SafeAreaView>   
+</KeyboardAvoidingView>
+</View>   
+  </TouchableWithoutFeedback>
   </View>
   <Toast/>
 </View>
@@ -135,7 +140,7 @@ const styles=StyleSheet.create({
   },
   backImage:{
     width:'100%',
-    height:340,
+    height:280,
     position:'absolute',
     top:0,
     resizeMode:'cover'

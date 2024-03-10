@@ -2,16 +2,18 @@ import React, { useState,useRef, useEffect} from 'react';
 import  { StyleSheet, View, Pressable, Text, Alert, Button,ScrollView,Modal,TextInput }from 'react-native';
 import MapView, { Circle, Polyline, Marker } from 'react-native-maps';
 import { Entypo } from '@expo/vector-icons';
-
+import Toast from 'react-native-toast-message';
 
 const MyMapView = ({ }) => {
   //all states
   const [drawLine, setdawLine] = useState(false);
+  const [textdraw,setTextdraw]=useState('Start Drawing')  
   const [locations, setLocation] = useState([]);
   const [showlist, setShowlist] = useState(false);
   const [path, setPath] = useState([]);
   const [Name, setName] = useState('');
   const mapRef = useRef(null);
+  
   const [showModal,setshowModal]=useState(false)
   const [locName,setLocName]=useState()
   const [mapScrollEnabled, setMapScrollEnabled] = useState(true);
@@ -27,15 +29,24 @@ const MyMapView = ({ }) => {
 ///Handing the finish button
   const handleFinish = () => {
     if (path.length >1 && makeDraw) {
+      setTextdraw('Start Drawing')
       setMakedraw(false)
     setshowModal(true)
       const tempath=[...path]
       setPath([...tempath, path[0]]);
+
     } 
     else{
       Alert.alert('Kindly Draw First')
     }
   };
+
+  const showToast=()=>{
+    Toast.show({
+      type:'success',
+      text1:'Successfully New Location Stored.'
+    })
+  }
 
 
   //Handling the delete shape button.
@@ -78,6 +89,7 @@ const MyMapView = ({ }) => {
       setLocation([...locations, newLocation]);
       setPath([]);
       setLocName('');
+      showToast()
     } else {
       Alert.alert('Please enter a valid location name or draw a shape.');
     }
@@ -98,6 +110,7 @@ useEffect(()=>{
       </Pressable>
 
     </View>
+    
       <MapView
         style={styles.map}
         ref={mapRef}
@@ -157,7 +170,7 @@ useEffect(()=>{
     </View>
     {locations.map((coordinates, index) => (
       <View style={styles.listitem} key={index}>
-        <Pressable styles={{alignItems:'flex-start'}} onPress={() => handlesetLocation(coordinates.points)}>
+        <Pressable styles={{}} onPress={() => handlesetLocation(coordinates.points)}>
           
            <Text style={{fontSize:16,fontWeight:'bold'}}> Name: {coordinates.locName}</Text> 
           
@@ -174,14 +187,16 @@ useEffect(()=>{
 {/* //Last Three buttons */}
 
       <View style={{ flex: 1, padding: 20, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-        <Pressable style={styles.functionbuttons} onPress={() => { setdawLine(true)
+        <Pressable style={styles.drawbutton} onPress={() => { setdawLine(true)
            setPath([])
            setMapScrollEnabled(false) 
-           setMakedraw(true)}}><Text style={styles.txt}>Draw</Text></Pressable>
+           setMakedraw(true)
+           setTextdraw('Drawing')}}><Text style={styles.txt}>{textdraw}</Text></Pressable>
         <Pressable style={styles.functionbuttons} onPress={() => { handleFinish() }}><Text style={styles.txt}>Finish</Text></Pressable>
         <Pressable style={styles.functionbuttons} onPress={() => { setPath([])
         setdawLine(false) }}><Text style={styles.txt}>Clear</Text></Pressable>
       </View>
+      <Toast />
     </View>
   );
 };
@@ -229,7 +244,7 @@ listButtonText: {
 },
 
   listitem:{
-    alignItems:'center',
+    
     margin:10,
     borderWidth:1,
     borderColor:'black',
@@ -256,6 +271,16 @@ functionbuttons:{
   borderWidth:2,
   borderColor:'black'
 },
+drawbutton:{
+  backgroundColor:'#0E63C2',
+  padding:10,
+  borderRadius:8,
+  width:110,
+  alignItems:'center',
+  borderWidth:2,
+  borderColor:'black'
+},
+
 txt:{
   color:'white'
 },
