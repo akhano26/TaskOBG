@@ -175,9 +175,14 @@ useEffect(()=>{
            <Text style={{fontSize:16,fontWeight:'bold'}}> Name: {coordinates.locName}</Text> 
           
         </Pressable>
+        <View style={styles.listdelviewcontainer}>
+        <Pressable style={styles.viewbutton} onPress={() => handlesetLocation(coordinates.points)}>
+          <Text>View</Text>
+        </Pressable>
         <Pressable style={styles.deletebutton} onPress={() => handleDeleteShape(index)}>
           <Text>Delete</Text>
         </Pressable>
+        </View>
       </View>
     ))}
     <View style={{ alignItems: 'flex-end', marginTop: 5 }}></View>
@@ -228,7 +233,7 @@ listButtonContainer: {
   position: 'absolute',
   top: 60,
   left: 20,
-  backgroundColor: '#0E63C2',
+  backgroundColor: 'orange',
   paddingVertical: 10,
   paddingHorizontal: 20,
   borderRadius: 8,
@@ -263,7 +268,7 @@ width:70
 },
 
 functionbuttons:{
-  backgroundColor:'#0E63C2',
+  backgroundColor:'orange',
   padding:10,
   borderRadius:8,
   width:80,
@@ -272,7 +277,7 @@ functionbuttons:{
   borderColor:'black'
 },
 drawbutton:{
-  backgroundColor:'#0E63C2',
+  backgroundColor:'orange',
   padding:10,
   borderRadius:8,
   width:110,
@@ -321,6 +326,20 @@ deletebtn:{
   paddingTop:10,
   borderRadius:15,
   marginTop:15
+},
+viewbutton:{
+  backgroundColor:'lightblue',
+  alignItems:'center',
+  padding:5,
+margin:5,
+borderRadius:5,
+width:70
+},
+listdelviewcontainer:{
+  flex:1, 
+  justifyContent:'space-between',
+  flexDirection:'row'
+
 }
 
 
